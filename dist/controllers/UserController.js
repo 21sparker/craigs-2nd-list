@@ -7,7 +7,6 @@ class UserController extends CrudController_1.CrudController {
         throw new Error("Method not implemented");
     }
     read(req, res) {
-        console.log("Ran route");
         const userId = req.params["userId"];
         res.json({ message: `Looking for user ${userId} huh!?` });
     }

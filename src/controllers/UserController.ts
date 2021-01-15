@@ -6,7 +6,6 @@ export class UserController extends CrudController {
         throw new Error("Method not implemented");
     }
     public read(req: Request, res: Response) {
-        console.log("Ran route")
         const userId: string = req.params["userId"];
         res.json({ message: `Looking for user ${userId} huh!?` });
     }

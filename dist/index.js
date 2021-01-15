@@ -9,16 +9,6 @@ const knex_1 = __importDefault(require("knex"));
 const knexfile_1 = __importDefault(require("../knexfile"));
 const constants_1 = require("./config/constants");
 const routes_1 = require("./routes");
-// const knex: Knex = Knex({
-//     client: 'pg',
-//     connection: {
-//         host: 'localhost',
-//         port: 5432,
-//         user: 'postgres',
-//         password: 'postgres',
-//         database: 'test'
-//     }
-// });
 // Initialize knex.
 const knex = knex_1.default(knexfile_1.default.development);
 // Give the knex instance to objection
@@ -29,8 +19,7 @@ app.use(express_1.default.json());
 // Add routes
 app.use('/user', routes_1.userRouter);
 app.get('/', (req, res) => {
-    console.log("Ran index");
-    res.json({ message: "Ran inside index" });
+    res.json({ message: "You got me!" });
 });
 app.listen(constants_1.PORT, () => {
     console.log(`Server started at port ${constants_1.PORT}`);
