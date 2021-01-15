@@ -25,6 +25,16 @@ exports.seed = function(knex) {
 					state: 'CA',
 					zip: '90071'
 				},
+				{
+					name: 'Maria A. Benjamin', 
+					email: 'MariaABenjamin@jourrapide.com', 
+					password: 'mypassword',
+					phone_number: '215-357-1507',
+					address: '3404 Burning Memory Lane',
+					city: 'Churchville',
+					state: 'PA',
+					zip: '18966'
+				},
 			]);
 	});
 };
