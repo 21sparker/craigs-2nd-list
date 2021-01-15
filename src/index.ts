@@ -1,51 +1,47 @@
 import express from 'express';
 import { Model } from 'objection';
 import Knex from 'knex';
+import knexConfig from '../knexfile';
+import { PORT } from './config/constants';
+import { userRouter } from './routes';
 
-const knex: Knex = Knex({
-    client: 'pg',
-    connection: {
-        host: 'localhost',
-        port: 5432,
-        user: 'postgres',
-        password: 'postgres',
-        database: 'test'
-    }
-});
+// const knex: Knex = Knex({
+//     client: 'pg',
+//     connection: {
+//         host: 'localhost',
+//         port: 5432,
+//         user: 'postgres',
+//         password: 'postgres',
+//         database: 'test'
+//     }
+// });
 
-
+// Initialize knex.
+const knex = Knex(knexConfig.development);
 
 // Give the knex instance to objection
 Model.knex(knex);
 
-class User extends Model {
-    static get tableName() {
-        return 'users';
-    }
-
-    static get idColumn() {
-        return 'user_id';
-    }
-}
-
-async function doDBstuff() {
-    // Get User
-    const first_person = await User.query().where('name', 'sean');
-    return first_person;
-}
-
-let user_to_show = null;
-doDBstuff().then((res) => { user_to_show = res[0] })
-console.log(user_to_show)
-
 const app = express();
-const port = 3000;
 
-app.get('/user', (req, res) => {
-    res.json({name: "sean" });
+// Process json requests
+app.use(express.json());
+
+// Add routes
+app.use('/user', userRouter);
+
+app.get('/', (req: express.Request, res: express.Response) => {
+    console.log("Ran index")
+    res.json({ message: "Ran inside index" })
 })
 
 
-app.listen(port, () => {
-    console.log("Server started");
+
+app.listen(PORT, () => {
+    console.log(`Server started at port ${PORT}`);
 })
+
+  
+// TODO: Update with this error handler:
+// http://vincit.github.io/objection.js/recipes/error-handling.html#examples
+
