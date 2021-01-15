@@ -5,7 +5,6 @@ import knexConfig from '../knexfile';
 import { PORT } from './config/constants';
 import { userRouter } from './routes';
 
-
 // Initialize knex.
 const knex = Knex(knexConfig.development);
 
