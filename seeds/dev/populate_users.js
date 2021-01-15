@@ -24,7 +24,7 @@ exports.seed = function(knex) {
 					city: 'Los Angeles',
 					state: 'CA',
 					zip: '90071'
-				},
+				},				
 			]);
 	});
 };
