@@ -16,11 +16,11 @@
         "paths": {
           "@controllers/*": ["./src/controllers/*"],
           "@models/*": ["./src/models/*"],
-          "@views/*": ["./src/views/*"],
-          "@config/*": ["./src/config/*"]
-        },
+          "@routes/*": ["./src/routes/*"],
+          "@config/*": ["./src/config"]
+        }
     },
     "include": [
         "src/**/*"
-    ]
+, "index.ts"    ]
 }
