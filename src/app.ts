@@ -2,7 +2,6 @@ import express from 'express';
 import { Model } from 'objection';
 import Knex from 'knex';
 import knexConfig from '../knexfile';
-import { PORT } from './config/constants';
 import { userRouter } from './routes';
 
 // Initialize knex.
@@ -23,11 +22,8 @@ app.get('/', (req: express.Request, res: express.Response) => {
     res.json({ message: "You got me!" });
 })
 
-app.listen(PORT, () => {
-    console.log(`Server started at port ${PORT}`);
-})
+export default app;
 
-  
 // TODO: Update with this error handler:
 // http://vincit.github.io/objection.js/recipes/error-handling.html#examples
 

@@ -24,7 +24,6 @@ exports.seed = function(knex) {
 					city: 'Los Angeles',
 					state: 'CA',
 					zip: '90071'
-				},
 				{
 					name: 'Maria A. Benjamin', 
 					email: 'MariaABenjamin@jourrapide.com', 
@@ -36,5 +35,3 @@ exports.seed = function(knex) {
 					zip: '18966'
 				},
 			]);
-	});
-};
