@@ -1,11 +1,11 @@
 import express from 'express';
 import { Model } from 'objection';
 import Knex from 'knex';
-import knexConfig from '../../knexfile';
+import { KnexConfig } from '../config';
 import { userRouter } from './routes';
 
 // Initialize knex.
-const knex = Knex(knexConfig.development);
+const knex = Knex(KnexConfig.config);
 
 // Give the knex instance to objection
 Model.knex(knex);
