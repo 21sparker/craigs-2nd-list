@@ -1,5 +1,5 @@
 import app from './app';
-import { PORT } from './config/constants';
+import { PORT } from '../config';
 
 const server = app.listen(PORT, () => {
     console.log(`Server started at port ${PORT}`);

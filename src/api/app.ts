@@ -1,7 +1,7 @@
 import express from 'express';
 import { Model } from 'objection';
 import Knex from 'knex';
-import knexConfig from '../knexfile';
+import knexConfig from '../../knexfile';
 import { userRouter } from './routes';
 
 // Initialize knex.

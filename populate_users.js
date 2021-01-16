@@ -24,6 +24,7 @@ exports.seed = function(knex) {
 					city: 'Los Angeles',
 					state: 'CA',
 					zip: '90071'
+				},
 				{
 					name: 'Maria A. Benjamin', 
 					email: 'MariaABenjamin@jourrapide.com', 

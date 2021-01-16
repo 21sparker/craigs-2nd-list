@@ -5,7 +5,22 @@
         "rootDir": "src",
         "outDir": "dist",
         "esModuleInterop": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "./src/@types"
+          ],
         "strict": true,
-        // "allowJs": true
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "baseUrl": ".",
+        "paths": {
+          "@controllers/*": ["./src/controllers/*"],
+          "@models/*": ["./src/models/*"],
+          "@views/*": ["./src/views/*"],
+          "@config/*": ["./src/config/*"]
+        }
     },
+    "include": [
+        "src/**/*"
+    ]
 }
