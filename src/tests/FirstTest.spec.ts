@@ -10,7 +10,7 @@ describe("GET / - a simple api endpoint", () => {
 })
 
 
-describe("POST /user", () => {
+describe("POST /users", () => {
     test("Add new user", async (done) => {
         const body = {
             name: 'Johnny',
@@ -18,12 +18,28 @@ describe("POST /user", () => {
             password: 'new_password'
         }
         await request(app)
-            .post('/user')
+            .post('/users')
             .send(body)
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200)
-        
+
+        done();
+    })
+})
+
+describe("PATCH /users", () => {
+    test("Add new user", async (done) => {
+        const body = {
+            email: 'patched_email@gmail.com',
+        }
+        await request(app)
+            .patch('/users/1')
+            .send(body)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(200)
+
         done();
     })
 })

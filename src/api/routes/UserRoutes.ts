@@ -1,36 +1,41 @@
 import { CommonRoutesConfig } from './CommonRoutesConfig';
 import express, { Request, Response, NextFunction } from 'express';
+import { UserController } from '../controllers/UserController';
+import { CrudController } from '../controllers/CrudController';
+import { userController } from '../controllers';
 
 export class UserRoutes extends CommonRoutesConfig {
+    userController: CrudController = new UserController();
+
     constructor(app: express.Application) {
         super(app, "UserRoutes");
     }
 
     configureRoutes() {
-        
         this.app.route('/users')
-            .get((req: Request, res: Response) => {
-                res.status(200).send('List of users');
-            })
-            .post((req: Request, res: Response) => {
-                res.status(200).send('Post to users');
-            });
+            .get([
+                userController.list,
+            ])
+            .post([
+                userController.create,
+            ]);
         
         this.app.route('/users/:userId')
-            .all((req: Request, res: Response, next: NextFunction) => {
-                // this middleware function runs before any request to /users/:userId
-                // can do things like authenticate
-                next();
-            })
-            .get((req: Request, res: Response) => {
-                res.status(200).send(`GET requested for id ${req.params.userId}`);
-            })
+            .all([])
+            // .all((req: Request, res: Response, next: NextFunction) => {
+            //     // this middleware function runs before any request to /users/:userId
+            //     // can do things like authenticate
+            //     next();
+            // })
+            .get([
+                userController.read,
+            ])
             .put((req: Request, res: Response) => {
                 res.status(200).send(`PUT requested for id ${req.params.userId}`);
             })
-            .patch((req: Request, res: Response) => {
-                res.status(200).send(`PATCH requested for id ${req.params.userId}`);
-            })
+            .patch([
+                userController.update,
+            ])
             .delete((req: Request, res: Response) => {
                 res.status(200).send(`DELETE requested for id ${req.params.userId}`);
             });
