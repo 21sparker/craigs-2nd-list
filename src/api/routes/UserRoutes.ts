@@ -36,9 +36,9 @@ export class UserRoutes extends CommonRoutesConfig {
             .patch([
                 userController.update,
             ])
-            .delete((req: Request, res: Response) => {
-                res.status(200).send(`DELETE requested for id ${req.params.userId}`);
-            });
+            .delete([
+                userController.delete,
+            ]);
         
         return this.app;
     }

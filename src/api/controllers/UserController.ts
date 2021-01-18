@@ -39,8 +39,15 @@ export class UserController extends CrudController {
     }
 
     // Delete a user
-    public delete(req: Request, res: Response) {
-        throw new Error("Method not implemented.");
+    public async delete(req: Request, res: Response) {
+        const userId: string = req.params["userId"];
+        const numOfDeletedUsers = await User.query().deleteById(userId);
+
+        if (numOfDeletedUsers === 0) {
+            res.status(204).end();
+        } else {
+            res.status(200).end();
+        }
     }
 
     // List all users

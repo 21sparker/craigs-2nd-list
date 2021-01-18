@@ -29,7 +29,7 @@ describe("POST /users", () => {
 })
 
 describe("PATCH /users", () => {
-    test("Add new user", async (done) => {
+    test("Update user email", async (done) => {
         const body = {
             email: 'patched_email@gmail.com',
         }
@@ -41,5 +41,14 @@ describe("PATCH /users", () => {
             .expect(200)
 
         done();
+    })
+})
+
+describe("DELETE /users", () => {
+    test("Delete a user", async (done) => {
+        await request(app)
+                .delete('/users/2')
+                .send()
+                .expect(204)
     })
 })
