@@ -10,23 +10,29 @@ class UserService {
         return UserService.instance;
     }
 
-    public async create(resource: any) {
-        return await User.query().modify('create', resource);
+    public async create(resource: any): Promise<User> {
+        return await User.query().modify('create', resource).first();
     }
 
-    public async readById(id: string) {
-        return await User.query().modify('searchById', id);
+    public async readById(id: string): Promise<User> {
+        return await User.query().modify('searchById', id).first();
     }
 
-    public async patchById(id: string, resource: any) {
-        return await User.query().modify('patchById', id, resource)
+    public async getUserByEmail(email: string): Promise<User> {
+        return await User.query().modify('searchByEmail', email).first();
     }
 
-    public async deleteById(id: string, resource: any) {
-        return await User.query().modify('deleteById', id)
+    public async patchById(id: string, resource: any): Promise<User> {
+        return await User.query().modify('patchById', id, resource).first();
     }
 
+    public async deleteById(id: string): Promise<void> {
+        await User.query().modify('deleteById', id)
+    }
 
-
-
+    public async listAll(): Promise<Array<User>> {
+        return await User.query().select();
+    }
 }
+
+export default UserService.getInstance();

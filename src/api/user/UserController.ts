@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import { ValidationError } from 'objection';
 import { CrudController } from '../common/CrudController';
-import User from './User';
+import UserService from './UserService';
 
 class UserController extends CrudController {
     private static instance: UserController;
@@ -15,67 +14,34 @@ class UserController extends CrudController {
 
     // Create a new user
     public async create(req: Request, res: Response) {
-        let user;
-        try {
-            user = await User.query()
-                    .modify('create', req.body);
-        } catch (e) {
-            // Note this check is also performed by a middleware, need to get rid of one
-            if (e instanceof ValidationError) {
-                res.status(400).send({error: 'Missing required fields email and password'});
-            } else {
-                res.status(400).send({error: 'Internal error occurred.'});
-            }
-        }
-
-        if (user) {
-            res.status(200).json(user);
-        }
+        const user = await UserService.create(req.body);
+        res.status(201).json({id: user});
     }
 
-    // Get a new user
+    // Read user
     public async read(req: Request, res: Response) {
         const userId: string = req.params["userId"];
-        const user = await User.query()
-            .modify('searchById', userId);
-        
-        if (user) {
-            res.status(200).json(user);
-        } else {
-            res.status(404).json({error: 'User not found'});
-        }
+        const user = await UserService.readById(userId);
+        res.status(200).json(user);
     }
 
     // Update a new user
     public async patch(req: Request, res: Response) {
         const userId: string = req.params["userId"];
-        const user = await User.query()
-            .modify('patchById', userId, req.body)
-        
-        if (user) {
-            res.status(200).json(user); 
-        } else {
-            res.status(404).json({error: 'User not found'});
-        }
-
-        res.status(200).json(user);
+        const user = await UserService.patchById(userId, req.body); 
+        res.status(200).json(user); 
     }
 
     // Delete a user
     public async delete(req: Request, res: Response) {
         const userId: string = req.params["userId"];
-        const numOfDeletedUsers = await User.query().deleteById(userId);
-
-        if (numOfDeletedUsers === 1) {
-            res.status(200).end();
-        } else {
-            res.status(404).json({error: 'User not found'});
-        }
+        await UserService.deleteById(userId);
+        res.status(204).end();
     }
 
     // List all users
-    public async list(req: Request, res: Response) {
-        const users: Array<User> = await User.query().select();
+    public async listUsers(req: Request, res: Response) {
+        const users = await UserService.listAll();
         res.status(200).json(users);
     }
 }

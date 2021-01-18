@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import User from './User';
+import UserService from './UserService';
 
 
 class UserMiddleware {
@@ -21,9 +22,9 @@ class UserMiddleware {
         }
     }
 
+    // Validate that the email isn't already being used
     public async validateSameEmailDoesntExists(req: Request, res: Response, next: NextFunction) {
-        const user = await User.query()
-                        .modify('searchByEmail', req.body.email);
+        const user = await UserService.getUserByEmail(req.body.email);
         if (user) {
             res.status(400).send({error: 'User email already exists'});
         } else {
@@ -32,10 +33,17 @@ class UserMiddleware {
     }
 
     public async validateUserExists(req: Request, res: Response, next: NextFunction) {
-        const user = await User.query()
+        const user = await UserService.readById(req.params.userId);
+        if (user) {
+            next();
+        } else {
+            res.status(404).json({error: `User ${req.params.userId} not found`});
+        }
     
     }
 
     
 
 }
+
+export default UserMiddleware.getInstance();

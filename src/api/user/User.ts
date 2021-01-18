@@ -40,7 +40,7 @@ export default class User extends Model {
     static modifiers: Modifiers = {
         create(query, resource) {
             query.insert(resource)
-                .returning('*') // Unique postgres callback that returns the new user
+                .returning('*'); // Unique postgres callback that returns the new user
         },
         searchById(query, id) {
             query.findById(parseInt(id));
@@ -52,12 +52,11 @@ export default class User extends Model {
         patchById(query, id, resource) {
             query.patch(resource)
                 .where(User.idColumn, id)
-                .returning('*')
-                .first();
+                .returning('*');
         },
         deleteById(query, id) {
             query.deleteById(id);
-        }
+        },
 
     }
 }
