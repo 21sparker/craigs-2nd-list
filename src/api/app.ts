@@ -8,8 +8,6 @@ import debug from 'debug';
 import { Model } from 'objection';
 import Knex from 'knex';
 import { KnexConfig } from '../config';
-import { Debugger } from 'inspector';
-// import { userRouter } from '../..';
 
 // Initialize knex.
 const knex = Knex(KnexConfig.config);
@@ -29,19 +27,6 @@ app.use(express.json());
 // middleware to allow cross-origin requests
 app.use(cors());
 
-// configuring expressWinston loggin middleware
-// which automatically log all HTTP requests handled by Express.js
-// app.use(expressWinston.logger({
-//     transports: [
-//         new winston.transports.Console()
-//     ],
-//     format: winston.format.combine(
-//         winston.format.colorize(),
-//         winston.format.json()
-//     )
-// }))
-
-
 // adding routes
 routes.push(new UserRoutes(app));
 
@@ -54,10 +39,6 @@ app.use(expressWinston.logger({
         winston.format.json()
     )
 }))
-
-
-// Add routes
-// app.use('/user', userRouter);
 
 app.get('/', (req: express.Request, res: express.Response) => {
     res.json({ message: "You got me!" });
