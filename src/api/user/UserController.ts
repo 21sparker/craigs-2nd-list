@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { ValidationError } from 'objection';
 import { CrudController } from '../common/CrudController';
 import User from './User';
 
@@ -14,36 +15,49 @@ class UserController extends CrudController {
 
     // Create a new user
     public async create(req: Request, res: Response) {
-        const userId: string = req.params["userId"];
-        const user: User = await User.query()
-            .insert(req.body)
-            .returning('*') // Unique postgres callback that returns the new user
-        
-        res.status(200).json(user)
+        let user;
+        try {
+            user = await User.query()
+                    .modify('create', req.body);
+        } catch (e) {
+            // Note this check is also performed by a middleware, need to get rid of one
+            if (e instanceof ValidationError) {
+                res.status(400).send({error: 'Missing required fields email and password'});
+            } else {
+                res.status(400).send({error: 'Internal error occurred.'});
+            }
+        }
+
+        if (user) {
+            res.status(200).json(user);
+        }
     }
 
     // Get a new user
     public async read(req: Request, res: Response) {
         const userId: string = req.params["userId"];
-        const user: User = await User.query()
-            .findById(parseInt(userId));
+        const user = await User.query()
+            .modify('searchById', userId);
         
-        if (user == undefined) {
-            res.status(404).json({});
+        if (user) {
+            res.status(200).json(user);
         } else {
-            res.json(user);
+            res.status(404).json({error: 'User not found'});
         }
     }
 
     // Update a new user
-    public async update(req: Request, res: Response) {
+    public async patch(req: Request, res: Response) {
         const userId: string = req.params["userId"];
         const user = await User.query()
-            .patch(req.body)
-            .where(User.idColumn, userId)
-            .returning('*')
-            .first();
+            .modify('patchById', userId, req.body)
         
+        if (user) {
+            res.status(200).json(user); 
+        } else {
+            res.status(404).json({error: 'User not found'});
+        }
+
         res.status(200).json(user);
     }
 
@@ -52,10 +66,10 @@ class UserController extends CrudController {
         const userId: string = req.params["userId"];
         const numOfDeletedUsers = await User.query().deleteById(userId);
 
-        if (numOfDeletedUsers === 0) {
-            res.status(204).end();
-        } else {
+        if (numOfDeletedUsers === 1) {
             res.status(200).end();
+        } else {
+            res.status(404).json({error: 'User not found'});
         }
     }
 

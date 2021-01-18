@@ -21,7 +21,7 @@ export default class User extends Model {
     // is created it is checked against this schema. http://json-schema.org/.
     static jsonSchema = {
         type: 'object',
-        required: ['name'],
+        required: ['email', 'password'],
 
         properties: {
             id: { type: 'integer' },
@@ -37,21 +37,27 @@ export default class User extends Model {
     }
 
     // Modifiers are reusable query snippets that can be used in various places.
-    // static modifiers: Modifiers = {
-    //     // Our example modifier is a a semi-dumb fuzzy name match. We split the
-    //     // name into pieces using whitespace and then try to partially match
-    //     // each of those pieces to both the `firstName` and the `lastName`
-    //     // fields.
-    //     searchByName(query, name) {
-    //         // This `where` simply creates parentheses so that other `where`
-    //         // statements don't get mixed with the these.
-    //         query.where((query) => {
-    //             for (const namePart of name.trim().split(/\s+/)) {
-    //             for (const column of ['firstName', 'lastName']) {
-    //                 query.orWhereRaw('lower(??) like ?', [column, namePart.toLowerCase() + '%'])
-    //             }
-    //             }
-    //         })
-    //     },
-    // }
+    static modifiers: Modifiers = {
+        create(query, resource) {
+            query.insert(resource)
+                .returning('*') // Unique postgres callback that returns the new user
+        },
+        searchById(query, id) {
+            query.findById(parseInt(id));
+        },
+        searchByEmail(query, email) {
+            query.where('email', email)
+                .first();
+        },
+        patchById(query, id, resource) {
+            query.patch(resource)
+                .where(User.idColumn, id)
+                .returning('*')
+                .first();
+        },
+        deleteById(query, id) {
+            query.deleteById(id);
+        }
+
+    }
 }

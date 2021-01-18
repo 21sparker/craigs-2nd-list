@@ -10,12 +10,10 @@ export class UserRoutes extends CommonRoutesConfig {
 
     configureRoutes() {
         this.app.route('/users')
-            .get([
-                UserController.list,
-            ])
-            .post([
+            .get(UserController.list)
+            .post(
                 UserController.create,
-            ]);
+            );
         
         this.app.route('/users/:userId')
             .all([
@@ -28,7 +26,7 @@ export class UserRoutes extends CommonRoutesConfig {
                 res.status(200).send(`PUT requested for id ${req.params.userId}`);
             })
             .patch([
-                UserController.update,
+                UserController.patch,
             ])
             .delete([
                 UserController.delete,
