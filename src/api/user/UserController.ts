@@ -2,7 +2,16 @@ import { Request, Response } from 'express';
 import { CrudController } from '../common/CrudController';
 import User from './User';
 
-export class UserController extends CrudController {
+class UserController extends CrudController {
+    private static instance: UserController;
+
+    public static getInstance(): UserController {
+        if (!UserController.instance) {
+            UserController.instance = new UserController();
+        }
+        return UserController.instance;
+    }
+
     // Create a new user
     public async create(req: Request, res: Response) {
         const userId: string = req.params["userId"];
@@ -56,3 +65,5 @@ export class UserController extends CrudController {
         res.status(200).json(users);
     }
 }
+
+export default UserController.getInstance();
