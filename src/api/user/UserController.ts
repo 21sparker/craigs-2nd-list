@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { CrudController } from './CrudController';
-import { User } from '../models';
+import { CrudController } from '../common/CrudController';
+import User from './User';
 
 export class UserController extends CrudController {
     // Create a new user

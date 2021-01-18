@@ -1,11 +1,10 @@
-import { CommonRoutesConfig } from './CommonRoutesConfig';
+import { CommonRoutesConfig } from '../common/CommonRoutesConfig';
 import express, { Request, Response, NextFunction } from 'express';
-import { UserController } from '../controllers/UserController';
-import { CrudController } from '../controllers/CrudController';
-import { userController } from '../controllers';
+import { UserController } from './UserController';
+
+const userController: UserController = new UserController();
 
 export class UserRoutes extends CommonRoutesConfig {
-    userController: CrudController = new UserController();
 
     constructor(app: express.Application) {
         super(app, "UserRoutes");
@@ -21,12 +20,9 @@ export class UserRoutes extends CommonRoutesConfig {
             ]);
         
         this.app.route('/users/:userId')
-            .all([])
-            // .all((req: Request, res: Response, next: NextFunction) => {
-            //     // this middleware function runs before any request to /users/:userId
-            //     // can do things like authenticate
-            //     next();
-            // })
+            .all([
+                
+            ])
             .get([
                 userController.read,
             ])
