@@ -27,7 +27,7 @@ class UserService {
     }
 
     public async deleteById(id: string): Promise<void> {
-        await User.query().modify('deleteById', id)
+        await User.query().modify('deleteById', id);
     }
 
     public async listAll(): Promise<Array<User>> {
