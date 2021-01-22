@@ -9,8 +9,17 @@ import { Model } from 'objection';
 import Knex from 'knex';
 import { KnexConfig } from '../config';
 
+let dbConfig;
+switch (process.env.NODE_ENV) {
+    case 'production':
+        dbConfig = KnexConfig.production;
+        break;
+    default:
+        dbConfig = KnexConfig.development;
+}
+
 // Initialize knex.
-const knex = Knex(KnexConfig.config);
+const knex = Knex(dbConfig);
 
 // Give the knex instance to objection
 Model.knex(knex);

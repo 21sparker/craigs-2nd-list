@@ -25,7 +25,7 @@ export const Server = {
 }
 
 export const KnexConfig = {
-    config: {
+    development: {
         client: 'postgresql',
         connection: {
             host: process.env.DATABASE_HOST_NAME || Database.host,
@@ -46,8 +46,24 @@ export const KnexConfig = {
         seeds: {
             directory: 'seeds'
         }
-
+    },
+    production: {
+        client: 'postgresql',
+        connection: process.env.DATABASE_URL,
+        pool: {
+            min: Number(process.env.DATABASE_POOL_MIN || Database.poolMin),
+            max: Number(process.env.DATABASE_POOL_MAX || Database.poolMax),
+            idleTimeoutMillis: Number(process.env.DATABASE_POOL_IDLE || Database.poolIdle),
+        },
+        migrations: {
+            tableName: 'knex_migrations',
+            directory: 'migrations'
+        },
+        seeds: {
+            directory: 'seeds'
+        }
     }
 }
+
 
 export default { Database, Server, KnexConfig }
