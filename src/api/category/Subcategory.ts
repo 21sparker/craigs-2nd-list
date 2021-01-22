@@ -11,15 +11,16 @@ export default class Subcategory extends Model {
 
     static get relationMappings() {
         // Avoid circular dependencies
-        const Category = require('./Category');
+        const Category = require('./Category').default;
 
+        console.log(Category);
         return {
             category: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Category,
                 join: {
                     from: 'categories.category_id',
-                    to: 'subcategories.subcategory_id'
+                    to: 'subcategories.category_id'
                 }
             }
         }
