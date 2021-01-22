@@ -50,6 +50,9 @@ export const KnexConfig = {
     production: {
         client: 'postgresql',
         connection: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnathorized: false
+        },
         pool: {
             min: Number(process.env.DATABASE_POOL_MIN || Database.poolMin),
             max: Number(process.env.DATABASE_POOL_MAX || Database.poolMax),
