@@ -5,27 +5,27 @@ import { Config } from 'knex'
 // Add .env values to running process
 dotenv.config()
 
-export namespace Database {
-    export const schema = 'api'
+export const Database = {
+    schema: 'api',
     // export const url = process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/test'
     // export const config = parseDbUrl(url)
     // export const { database, user, name, username, password, hostname, host, port } = config
-    export const database = process.env.DATABASE_NAME || 'test'
-    export const host = process.env.DATABASE_HOST_NAME || 'localhost'
-    export const user = process.env.DATABASE_USERNAME || 'postgres'
-    export const password = process.env.DATABASE_PASSWORD || 'postgres'
-    export const port = Number(process.env.DATABASE_PORT || '5432')
-    export const poolMin = Number(process.env.DATABASE_POOL_MIN || '0')
-    export const poolMax = Number(process.env.DATABASE_POOL_MAX || '10')
-    export const poolIdle = Number(process.env.DATABASE_POOL_IDLE || '10000')
+    database: process.env.DATABASE_NAME || 'test',
+    host: process.env.DATABASE_HOST_NAME || 'localhost',
+    user: process.env.DATABASE_USERNAME || 'postgres',
+    password: process.env.DATABASE_PASSWORD || 'postgres',
+    port: Number(process.env.DATABASE_PORT || '5432'),
+    poolMin: Number(process.env.DATABASE_POOL_MIN || '0'),
+    poolMax: Number(process.env.DATABASE_POOL_MAX || '10'),
+    poolIdle: Number(process.env.DATABASE_POOL_IDLE || '10000')
 }
 
-export namespace Server {
-    export const port = Number(process.env.PORT || '4000')
+export const Server = {
+    port: Number(process.env.PORT || '4000')
 }
 
-export namespace KnexConfig {
-    export const config: Config = {
+export const KnexConfig = {
+    config: {
         client: 'postgresql',
         connection: {
             host: process.env.DATABASE_HOST_NAME || Database.host,
