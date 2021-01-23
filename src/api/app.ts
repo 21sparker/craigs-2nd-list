@@ -8,6 +8,7 @@ import debug from 'debug';
 import { Model } from 'objection';
 import Knex from 'knex';
 import { KnexConfig } from '../config';
+import { CategoryRoutes } from './category/CategoryRoutes';
 
 let dbConfig;
 switch (process.env.NODE_ENV) {
@@ -38,6 +39,7 @@ app.use(cors());
 
 // adding routes
 routes.push(new UserRoutes(app));
+routes.push(new CategoryRoutes(app));
 
 app.use(expressWinston.logger({
     transports: [
