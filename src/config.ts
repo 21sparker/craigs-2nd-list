@@ -1,6 +1,12 @@
 // import parseDbUrl from 'parse-database-url'
 import dotenv from 'dotenv'
 import { Config } from 'knex'
+import pg from 'pg';
+
+// Fix ssl error on Heroku
+pg.defaults.ssl = {
+    rejectUnauthorized: false,
+}
 
 // Add .env values to running process
 dotenv.config()
@@ -51,7 +57,7 @@ export const KnexConfig = {
         client: 'postgresql',
         connection: process.env.DATABASE_URL,
         ssl: {
-            rejectUnathorized: false
+            rejectUnauthorized: false
         },
         pool: {
             min: Number(process.env.DATABASE_POOL_MIN || Database.poolMin),
