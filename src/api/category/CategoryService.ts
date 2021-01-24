@@ -1,12 +1,6 @@
 import Category from './Category';
 import Subcategory from './Subcategory';
 
-interface CategoryQueryOuput {
-    category: string;
-    subcategory: string;
-}
-
-
 interface CategoryInterface {
     category_id: number;
     name: string;
@@ -17,7 +11,6 @@ interface SubcategoryInterface {
     subcategory_id: number;
     name: string;
 }
-
 
 class CategoryService {
     private static instance: CategoryService;
@@ -38,8 +31,14 @@ class CategoryService {
                 'subcategories.name AS subcategory'
             );
 
-        let output: Array<CategoryInterface>;
+        let output: { [key: string]: [] } = {};
+
         const results = queryResults.map((result: Category) => {
+            const categoryName: string = result.name;
+            if (output.hasOwnProperty(categoryName)) {
+                output[categoryName] = 
+            }
+
             // const item: CategoryQueryOuput = result as unknown as CategoryQueryOuput;
             
             // if (!output.hasOwnProperty(item.category) {
