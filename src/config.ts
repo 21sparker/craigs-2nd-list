@@ -74,7 +74,7 @@ export const KnexConfig = {
     }
 }
 
-export const BcryptConfig = {
+export const AuthConfig = {
     saltRounds: Number(process.env.SALT_ROUNDS || 10),
     privateKey: process.env.PRIVATE_KEY || 'some_private_key'
 }

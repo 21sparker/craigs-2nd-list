@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { CrudController } from '../common/CrudController';
 import UserService from './UserService';
+import bcrypt from 'bcrypt';
+import { AuthConfig } from '@config/*';
 
 class UserController extends CrudController {
     private static instance: UserController;
@@ -14,6 +16,10 @@ class UserController extends CrudController {
 
     // Create a new user
     public async create(req: Request, res: Response) {
+        // Update password to its hashed version
+        console.log("Create thingy")
+        req.body.password = await bcrypt.hash(req.body.password, AuthConfig.saltRounds);
+        // console.log(req.body);
         const user = await UserService.create(req.body);
         res.status(201).json({id: user});
     }

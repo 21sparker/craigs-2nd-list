@@ -1,7 +1,7 @@
 import UserService from "../user/UserService";
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
-import { BcryptConfig } from '@config/*';
+import { AuthConfig } from '@config/*';
 import jwt from 'jsonwebtoken';
 
 export class AuthMiddleware {
@@ -19,14 +19,13 @@ export class AuthMiddleware {
         if (user) {
             next();
         } else {
-            res.status(404).json({error: 'User not found.'})
+            res.status(404).json({error: 'User not found.'});
         }
     }
 
     public async validateCorrectPassword(req: Request, res: Response, next: NextFunction) {
         const user = await UserService.getUserByEmail(req.body.email);
         const match = await bcrypt.compare(req.body.password, user.password);
-
         if (match) {
             next();
         } else {
@@ -37,7 +36,7 @@ export class AuthMiddleware {
     public async validateJWTToken(req: Request, res: Response, next: NextFunction) {
         const token = req.body.token;
         try {
-            const user = jwt.verify(token, BcryptConfig.privateKey);
+            jwt.verify(token, AuthConfig.privateKey);
             next();
         } catch(err) {
             res.status(401).json({ error: err.message });

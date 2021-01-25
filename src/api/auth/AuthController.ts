@@ -1,4 +1,4 @@
-import { BcryptConfig } from '@config/*';
+import { AuthConfig } from '@config/*';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import UserService from '../user/UserService';
@@ -16,7 +16,7 @@ class AuthController {
     public async getJWTToken(req: Request, res: Response) {
         const user = await UserService.getUserByEmail(req.body.email);
         try {
-            const token = jwt.sign(user, BcryptConfig.privateKey);
+            const token = jwt.sign(user, AuthConfig.privateKey);
             res.status(200).json({token: token});
         } catch(err) {
             res.status(500).end();
