@@ -1,4 +1,4 @@
-import { AuthConfig } from '@config/*';
+import { AuthConfig } from '../../config';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import UserService from '../user/UserService';

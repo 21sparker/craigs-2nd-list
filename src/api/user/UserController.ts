@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { CrudController } from '../common/CrudController';
 import UserService from './UserService';
 import bcrypt from 'bcrypt';
-import { AuthConfig } from '@config/*';
+import { AuthConfig } from '../../config';
 
 class UserController extends CrudController {
     private static instance: UserController;

@@ -1,7 +1,7 @@
 import UserService from "../user/UserService";
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
-import { AuthConfig } from '@config/*';
+import { AuthConfig } from '../../config';
 import jwt from 'jsonwebtoken';
 
 export class AuthMiddleware {
