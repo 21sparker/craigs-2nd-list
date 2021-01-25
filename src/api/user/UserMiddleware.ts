@@ -39,8 +39,8 @@ class UserMiddleware {
         } else {
             res.status(404).json({error: `User ${req.params.userId} not found`});
         }
-    
     }
+
 
     
 
