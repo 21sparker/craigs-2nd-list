@@ -15,17 +15,20 @@ switch (process.env.NODE_ENV) {
     case 'production':
         dbConfig = KnexConfig.production;
         break;
+    case 'test':
+        dbConfig = KnexConfig.test;
+        break;    
     default:
         dbConfig = KnexConfig.development;
 }
 
 // Initialize knex.
-const knex = Knex(dbConfig);
+export const knex = Knex(dbConfig);
 
 // Give the knex instance to objection
 Model.knex(knex);
 
-const app: express.Application = express();
+export const app: express.Application = express();
 
 const routes: Array<CommonRoutesConfig> = [];
 
@@ -55,7 +58,7 @@ app.get('/', (req: express.Request, res: express.Response) => {
     res.json({ message: "You got me!" });
 })
 
-export default app;
+export default { app, knex };
 
 // TODO: Update with this error handler:
 // http://vincit.github.io/objection.js/recipes/error-handling.html#examples
