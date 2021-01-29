@@ -3,7 +3,6 @@ import { CrudController } from '../common/CrudController';
 import UserService from './UserService';
 import bcrypt from 'bcrypt';
 import { AuthConfig } from '../../config';
-import jwt from 'jsonwebtoken';
 
 class UserController extends CrudController {
     private static instance: UserController;
