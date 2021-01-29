@@ -43,6 +43,7 @@
     "objection": "^2.2.6",
     "parse-database-url": "^0.3.0",
     "pg": "^8.5.1",
+    "sqlite3": "^5.0.1",
     "superagent": "^6.1.0",
     "supertest": "^6.1.1",
     "ts-jest": "^26.4.4",

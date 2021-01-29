@@ -1,5 +1,15 @@
 import request from 'supertest';
-import app from '../api/app';
+import { app, knex } from '../api/app';
+
+beforeAll(async () => {
+    await knex.migrate.latest();
+    await knex.seed.run();
+});
+
+afterAll(async () => {
+    await knex.migrate.rollback(undefined, true);
+    
+});
 
 describe("GET / - a simple api endpoint", () => {
     test("Hello API Request", async (done)=> {
@@ -15,7 +25,7 @@ describe("GET /users", () => {
     test("Get a user", async (done) => {
 
         await request(app)
-                .get('/users/10')
+                .get('/users/1')
                 .expect(200)
         
         done();
@@ -23,20 +33,16 @@ describe("GET /users", () => {
 })
 
 describe("POST /users", () => {
-    test("Add new user", async (done) => {
+    test("Add new user", async () => {
         const body = {
             name: 'Johnny',
             email: 'johnny_fake_@gmail.com',
             password: 'new_password'
         }
-        await request(app)
+        const res = await request(app)
             .post('/users')
-            .send(body)
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
-            .expect(201)
-
-        done();
+            .send(body);
+        expect(res.status).toBe(201);
     });
 
     test("Add invalid user", async (done) => {
@@ -64,7 +70,7 @@ describe("PATCH /users", () => {
             email: 'patched_email@gmail.com',
         }
         await request(app)
-            .patch('/users/1000')
+            .patch('/users/1')
             .send(body)
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)

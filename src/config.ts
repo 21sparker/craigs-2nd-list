@@ -1,7 +1,7 @@
 // import parseDbUrl from 'parse-database-url'
 import dotenv from 'dotenv'
-import { Config } from 'knex'
 import pg from 'pg';
+import path from 'path';
 
 // Fix ssl error on Heroku
 pg.defaults.ssl = {
@@ -31,6 +31,27 @@ export const Server = {
 }
 
 export const KnexConfig = {
+    test: {
+        client: 'postgresql',
+        connection: {
+            host: process.env.DATABASE_HOST_NAME || Database.host,
+            database: "v26_test",
+            user: "tester",
+            password: "tester",
+            port: Number(process.env.DATABASER_PORT || Database.port),
+        },
+        pool: {
+            min: Number(process.env.DATABASE_POOL_MIN || Database.poolMin),
+            max: Number(process.env.DATABASE_POOL_MAX || Database.poolMax),
+            idleTimeoutMillis: Number(process.env.DATABASE_POOL_IDLE || Database.poolIdle),
+        },
+        migrations: {
+            directory: path.join(__dirname, "database/migrations")
+        },
+        seeds: {
+            directory: path.join(__dirname, "database/seeds")
+        }
+    },
     development: {
         client: 'postgresql',
         connection: {
