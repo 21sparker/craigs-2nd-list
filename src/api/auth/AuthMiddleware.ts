@@ -34,12 +34,18 @@ export class AuthMiddleware {
     }
 
     public async validateJWTToken(req: Request, res: Response, next: NextFunction) {
-        const token = req.body.token;
+        const token = req.get("Authorization");
+
+        // No jwt token provided
+        if (!token) {
+            res.status(401).json({ error: "Missing token."});
+        }
+        
         try {
-            jwt.verify(token, AuthConfig.privateKey);
+            jwt.verify(token!, AuthConfig.privateKey);
             next();
         } catch(err) {
-            res.status(401).json({ error: err.message });
+            res.status(401).json({ error: err.message});
         }
     }
 }
