@@ -20,14 +20,7 @@ class UserController extends CrudController {
         // Update password to its hashed version
         req.body.password = await bcrypt.hash(req.body.password, AuthConfig.saltRounds);
         const user = await UserService.create(req.body);
-
-        // When a user is created, we'll return a jwt token
-        try {
-            const token = jwt.sign(user, AuthConfig.privateKey);
-            res.status(201).json({token: token});
-        } catch(err) {
-            res.status(500).end();
-        }
+        res.status(201).json(user);
     }
 
     // Read user
