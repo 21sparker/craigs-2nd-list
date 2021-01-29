@@ -1,6 +1,9 @@
 {
   "name": "v26-backend",
   "version": "1.0.0",
+  "engines": {
+    "node": "15.x"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
