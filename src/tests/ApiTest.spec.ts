@@ -8,6 +8,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
     await knex.migrate.rollback(undefined, true);
+    
 });
 
 describe("GET / - a simple api endpoint", () => {
@@ -32,20 +33,16 @@ describe("GET /users", () => {
 })
 
 describe("POST /users", () => {
-    test("Add new user", async (done) => {
+    test("Add new user", async () => {
         const body = {
             name: 'Johnny',
             email: 'johnny_fake_@gmail.com',
             password: 'new_password'
         }
-        await request(app)
+        const res = await request(app)
             .post('/users')
-            .send(body)
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
-            .expect(201)
-
-        done();
+            .send(body);
+        expect(res.status).toBe(201);
     });
 
     test("Add invalid user", async (done) => {
