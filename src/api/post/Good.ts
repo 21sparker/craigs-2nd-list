@@ -1,7 +1,7 @@
 import { Model } from 'objection';
 
 
-export default class ForSalePost extends Model {
+export default class Good extends Model {
     post_id!: number;
     title!: string;
     description!: string;
@@ -14,7 +14,7 @@ export default class ForSalePost extends Model {
     category_id!: number;
     subcategory_id!: number;
 
-    static tableName = 'forsale';
+    static tableName = 'goods';
     static idColumn = 'post_id';
     static get relationMappings() {
         const User = require('../user/User').default;
@@ -26,7 +26,7 @@ export default class ForSalePost extends Model {
                 relation: Model.BelongsToOneRelation,
                 modelClass: User,
                 join: {
-                    from: 'forsale.user_id',
+                    from: 'goods.user_id',
                     to: 'users.user_id'
                 }
             },
@@ -34,7 +34,7 @@ export default class ForSalePost extends Model {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Category,
                 join: {
-                    from: 'forsale.category_id',
+                    from: 'goods.category_id',
                     to: 'categories.category_id'
                 }
             },
@@ -42,7 +42,7 @@ export default class ForSalePost extends Model {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Subcategory,
                 join: {
-                    from: 'forsale.subcategory_id',
+                    from: 'goods.subcategory_id',
                     to: 'subcategories.subcategory_id'
                 }
             }

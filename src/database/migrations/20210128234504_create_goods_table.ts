@@ -2,7 +2,7 @@ import * as Knex from "knex";
 
 
 export async function up(knex: Knex): Promise<void> {   
-    return knex.schema.createTable('forsale', (table: Knex.TableBuilder) => {
+    return knex.schema.createTable('goods', (table: Knex.TableBuilder) => {
         table.increments('post_id').primary();
         table.text('title').notNullable();
         table.text('description').notNullable();
@@ -21,6 +21,6 @@ export async function up(knex: Knex): Promise<void> {
 
 
 export async function down(knex: Knex): Promise<void> {
-    return knex.schema.dropTableIfExists('forsale');
+    return knex.schema.dropTableIfExists('goods');
 }
 

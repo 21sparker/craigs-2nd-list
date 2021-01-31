@@ -8,7 +8,7 @@ export class PostRoutes extends CommonRoutesConfig {
     }
 
     configureRoutes() {
-        this.app.route('/forsale')
+        this.app.route('/goods')
             .get(
                 PostMiddleware.validateQuery
             )
