@@ -1,0 +1,52 @@
+import { Model } from 'objection';
+
+
+export default class ForSalePost extends Model {
+    post_id!: number;
+    title!: string;
+    description!: string;
+    location!: string;
+    price!: string;
+    image_url!: string;
+    created_at!: Date;
+    updated_at!: Date;
+    user_id!: number;
+    category_id!: number;
+    subcategory_id!: number;
+
+    static tableName = 'forsale';
+    static idColumn = 'post_id';
+    static get relationMappings() {
+        const User = require('../user/User').default;
+        const Category = require('../category/Category').default;
+        const Subcategory = require('../category/Subcategory').default;
+
+        return {
+            user: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: User,
+                join: {
+                    from: 'forsale.user_id',
+                    to: 'users.user_id'
+                }
+            },
+            category: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: Category,
+                join: {
+                    from: 'forsale.category_id',
+                    to: 'categories.category_id'
+                }
+            },
+            subcategory: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: Subcategory,
+                join: {
+                    from: 'forsale.subcategory_id',
+                    to: 'subcategories.subcategory_id'
+                }
+            }
+        }
+
+    }
+}
