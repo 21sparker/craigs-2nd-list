@@ -11,18 +11,19 @@ export async function seed(knex: Knex): Promise<void> {
         { subcategory_id: 3, name: "Furniture", category_id: 1},
         { subcategory_id: 4, name: "Office", category_id: 1},
         { subcategory_id: 5, name: "Electronics", category_id: 1},
+        { subcategory_id: 6, name: "Clothing", category_id: 1},
 
-        { subcategory_id: 6, name: "General Labor", category_id: 2},
-        { subcategory_id: 7, name: "Business", category_id: 2},
-        { subcategory_id: 8, name: "Software", category_id: 2},
-        { subcategory_id: 9, name: "Government", category_id: 2},
-        { subcategory_id: 10, name: "Legal", category_id: 2},
-        { subcategory_id: 11, name: "Marketing", category_id: 2},
+        { subcategory_id: 7, name: "General Labor", category_id: 2},
+        { subcategory_id: 8, name: "Business", category_id: 2},
+        { subcategory_id: 9, name: "Software", category_id: 2},
+        { subcategory_id: 10, name: "Government", category_id: 2},
+        { subcategory_id: 11, name: "Legal", category_id: 2},
+        { subcategory_id: 12, name: "Marketing", category_id: 2},
 
 
-        { subcategory_id: 12, name: "Apartments", category_id: 3},
-        { subcategory_id: 13, name: "Houses", category_id: 3},
-        { subcategory_id: 14, name: "Commercial", category_id: 3},
+        { subcategory_id: 13, name: "Apartments", category_id: 3},
+        { subcategory_id: 14, name: "Houses", category_id: 3},
+        { subcategory_id: 15, name: "Commercial", category_id: 3},
 
     ]);
 };
