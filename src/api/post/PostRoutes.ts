@@ -1,5 +1,6 @@
 import { CommonRoutesConfig } from '../common/CommonRoutesConfig';
 import { Application } from 'express';
+import PostMiddleware from './PostMiddleware';
 
 export class PostRoutes extends CommonRoutesConfig {
     constructor(app: Application) {
@@ -7,6 +8,10 @@ export class PostRoutes extends CommonRoutesConfig {
     }
 
     configureRoutes() {
+        this.app.route('/forsale')
+            .get(
+                PostMiddleware.validateQuery
+            )
         return this.app;
     }
 }
