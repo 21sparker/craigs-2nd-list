@@ -10,7 +10,7 @@ export async function seed(knex: Knex): Promise<void> {
         { subcategory_id: 2, name: "Cars", category_id: 1},
         { subcategory_id: 3, name: "Furniture", category_id: 1},
         { subcategory_id: 4, name: "Office", category_id: 1},
-        { subcategory_id: 5, name: "Electronics", category_id: 1},
+        { subcategory_id: 5, name: "Appliances", category_id: 1},
         { subcategory_id: 6, name: "Clothing", category_id: 1},
 
         { subcategory_id: 7, name: "General Labor", category_id: 2},
