@@ -5,7 +5,8 @@ export default class Good extends Model {
     post_id!: number;
     title!: string;
     description!: string;
-    location!: string;
+    city!: string;
+    state!: string;
     price!: string;
     image_url!: string;
     created_at!: Date;

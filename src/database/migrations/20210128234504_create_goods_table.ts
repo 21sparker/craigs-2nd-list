@@ -6,7 +6,8 @@ export async function up(knex: Knex): Promise<void> {
         table.increments('post_id').primary();
         table.text('title').notNullable();
         table.text('description').notNullable();
-        table.text('location').notNullable();
+        table.text('city').notNullable();
+        table.string('state', 2);
         table.string('price', 255).notNullable();
         table.text('image_url');
         table.timestamps(true, true);
