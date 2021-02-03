@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { CrudController } from '../common/CrudController';
+import PostService from './PostService';
 
 
 class PostController extends CrudController {
@@ -14,11 +15,14 @@ class PostController extends CrudController {
 
     // Create new post
     public async create(req: Request, res:Response) {
-        res.status(200).end();
+        const good = await PostService.createGood(req.body);
+        res.status(201).json(good);
     }
 
     public async read(req: Request, res: Response) {
-        res.status(200).end();
+        const goodId: string = req.params["goodId"];
+        const good = await PostService.readGoodById(goodId);
+        res.status(200).json(good);
     }
 
     public async patch(req: Request, res: Response) {
@@ -28,4 +32,10 @@ class PostController extends CrudController {
     public async delete(req: Request, res: Response) {
         res.status(200).end();
     }
+
+    public async search(req: Request, res: Response) {
+        res.status(200).end();
+    }
 }
+
+export default PostController.getInstance();

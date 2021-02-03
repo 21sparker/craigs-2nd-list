@@ -1,4 +1,4 @@
-import { Model } from 'objection';
+import { Model, Modifier, Modifiers } from 'objection';
 
 
 export default class Good extends Model {
@@ -48,6 +48,15 @@ export default class Good extends Model {
                 }
             }
         }
+    }
 
+    static modifiers: Modifiers = {
+        create(query, resource) {
+            query.insert(resource)
+                .returning('*');
+        },
+        searchById(query, id) {
+            query.findById(parseInt(id));
+        }
     }
 }
