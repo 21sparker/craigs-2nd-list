@@ -37,8 +37,13 @@ const debugLog: debug.IDebugger = debug('app');
 // Parse requests as json
 app.use(express.json());
 
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200,
+}
+
 // middleware to allow cross-origin requests
-app.use(cors());
+app.use(cors(corsOptions));
 
 // adding routes
 routes.push(new UserRoutes(app));
