@@ -14,6 +14,7 @@ export class AuthRoutes extends CommonRoutesConfig {
         this.app.post('/login', 
             UserMiddleware.validateRequiredUserBodyFields,
             AuthMiddleware.validateEmailExists,
+            AuthMiddleware.validateCorrectPassword,
             AuthController.getJWTToken
         );
 
