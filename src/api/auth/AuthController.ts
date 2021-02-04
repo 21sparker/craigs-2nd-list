@@ -21,7 +21,7 @@ class AuthController {
                 email: user.email
             }, AuthConfig.privateKey,
             { expiresIn: '1h' });
-            res.status(200).json({token: token});
+            res.status(200).json({user_id: user.user_id, token: token});
         } catch(err) {
             res.status(500).end();
         }
