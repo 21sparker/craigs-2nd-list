@@ -1,8 +1,9 @@
 import UserService from "../user/UserService";
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
-import { AuthConfig } from '../../config';
-import jwt from 'jsonwebtoken';
+import AuthService from './AuthService';
+
+
 
 export class AuthMiddleware {
     private static instance: AuthMiddleware;
@@ -42,7 +43,7 @@ export class AuthMiddleware {
         }
         
         try {
-            jwt.verify(token!, AuthConfig.privateKey);
+            AuthService.verifyJWTToken(token!);
             next();
         } catch(err) {
             res.status(401).json({ error: err.message});
