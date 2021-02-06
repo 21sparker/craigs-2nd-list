@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
+import AuthController from '../auth/AuthController';
+import AuthMiddleware from '../auth/AuthMiddleware';
 
 export class PostMiddleware {
     private static instance: PostMiddleware;
@@ -11,7 +13,16 @@ export class PostMiddleware {
     }
 
     public async validateQuery(req: Request, res: Response, next: NextFunction) {
+        console.log(req.query.k);
         next();
+    }
+
+    public async validateIfUserQuery(req: Request, res: Response, next: NextFunction) {
+        if (req.query.uid) {
+            await AuthMiddleware.validateJWTToken(req, res, next);
+        } else {
+            next();
+        }
     }
 }
 

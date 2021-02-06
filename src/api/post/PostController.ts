@@ -34,7 +34,13 @@ class PostController extends CrudController {
     }
 
     public async search(req: Request, res: Response) {
-        res.status(200).end();
+        const { q, sc, loc, uid } = req.query;
+        const searchResults = await PostService.search(
+            q as string | undefined, 
+            sc as string | string[] | undefined, 
+            loc as string | string[] | undefined, 
+            uid as string | undefined);
+        res.status(200).json(searchResults);
     }
 }
 
