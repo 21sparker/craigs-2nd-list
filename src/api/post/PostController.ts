@@ -15,6 +15,9 @@ class PostController extends CrudController {
 
     // Create new post
     public async create(req: Request, res:Response) {
+        const data = req.body;
+        data.user_id = req.user_id;
+        data.category_id = 1; // For the goods category
         const good = await PostService.createGood(req.body);
         res.status(201).json(good);
     }

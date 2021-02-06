@@ -15,9 +15,11 @@ export class PostRoutes extends CommonRoutesConfig {
                 PostMiddleware.validateQuery,
                 PostController.search
             )
-        //     .post(
-        //         PostController.create
-        //     )
+            .post(
+                AuthMiddleware.getJWTTokenData,
+                PostMiddleware.validateRequiredUserBodyFields,
+                PostController.create
+            )
         this.app.route('/goods/:goodId')
             .get(PostController.read)
             .patch(

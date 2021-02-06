@@ -38,6 +38,20 @@ export class PostMiddleware {
         }
     }
 
+    public async validateRequiredUserBodyFields(req: Request, res: Response, next: NextFunction) {
+        if (req.body &&
+            req.body.title &&
+            req.body.description &&
+            req.body.city &&
+            req.body.state &&
+            req.body.price &&
+            req.body.subcategory_id) {
+                next();
+            } else {
+                res.status(400).send({error: 'Missing at least one of the following fields: title, description, city, state, price, subcategory_id'});
+            }
+    }
+
     public async validatePatchUpdates(req: Request, res: Response, next: NextFunction) {
         const fieldsToUpdate: string[] = req.body.keys();
 
