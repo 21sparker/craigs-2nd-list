@@ -2,6 +2,7 @@ import { CommonRoutesConfig } from '../common/CommonRoutesConfig';
 import { Application } from 'express';
 import PostMiddleware from './PostMiddleware';
 import PostController from './PostController';
+import AuthMiddleware from '../auth/AuthMiddleware';
 
 export class PostRoutes extends CommonRoutesConfig {
     constructor(app: Application) {
@@ -19,6 +20,18 @@ export class PostRoutes extends CommonRoutesConfig {
         //     )
         this.app.route('/goods/:goodId')
             .get(PostController.read)
+            .patch(
+                AuthMiddleware.getJWTTokenData,
+                PostMiddleware.validatePostExists,
+                PostMiddleware.validateUserOwnsPost,
+                PostController.patch
+            )
+            .delete(
+                AuthMiddleware.getJWTTokenData,
+                PostMiddleware.validatePostExists,
+                PostMiddleware.validateUserOwnsPost,
+                PostController.delete
+            )
 
         return this.app;
     }

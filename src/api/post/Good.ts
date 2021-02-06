@@ -57,6 +57,14 @@ export default class Good extends Model {
         },
         searchById(query, id) {
             query.findById(parseInt(id));
+        },
+        patchById(query, id, resource) {
+            query.patch(resource)
+                .where(Good.idColumn, parseInt(id))
+                .returning('*');
+        },
+        deleteById(query, id) {
+            query.deleteById(parseInt(id));
         }
     }
 }

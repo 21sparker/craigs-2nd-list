@@ -19,6 +19,14 @@ class PostService {
         return await Good.query().modify('searchById', id).first();
     }
 
+    public async patchGoodById(id: string, resource: any): Promise<Good> {
+        return await Good.query().modify('patchById', id).first();
+    }
+
+    public async deleteGoodById(id: string, resource: any): Promise<void> {
+        await Good.query().modify('deleteById', id)
+    }
+
     public async search(q: string | undefined,
                         sc: string | string[] | undefined,
                         loc: string | string[] | undefined,

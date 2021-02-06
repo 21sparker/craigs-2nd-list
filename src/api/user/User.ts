@@ -55,7 +55,7 @@ export default class User extends Model {
                 .returning('*');
         },
         deleteById(query, id) {
-            query.deleteById(id);
+            query.deleteById(parseInt(id));
         },
 
     }

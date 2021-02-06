@@ -26,11 +26,15 @@ class PostController extends CrudController {
     }
 
     public async patch(req: Request, res: Response) {
-        res.status(200).end();
+        const goodId: string = req.params["goodId"];
+        const good = await PostService.patchGoodById(goodId, req.body);
+        res.status(200).json(good);
     }
 
     public async delete(req: Request, res: Response) {
-        res.status(200).end();
+        const goodId: string = req.params["goodId"];
+        await PostService.deleteGoodById(goodId, req.body);
+        res.status(204).end();
     }
 
     public async search(req: Request, res: Response) {
