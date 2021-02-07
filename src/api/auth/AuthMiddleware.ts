@@ -1,8 +1,9 @@
 import UserService from "../user/UserService";
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
-import { AuthConfig } from '../../config';
-import jwt from 'jsonwebtoken';
+import AuthService from './AuthService';
+
+
 
 export class AuthMiddleware {
     private static instance: AuthMiddleware;
@@ -33,7 +34,7 @@ export class AuthMiddleware {
         }
     }
 
-    public async validateJWTToken(req: Request, res: Response, next: NextFunction) {
+    public async getJWTTokenData(req: Request, res: Response, next: NextFunction) {
         const token = req.get("Authorization");
 
         // No jwt token provided
@@ -42,7 +43,8 @@ export class AuthMiddleware {
         }
         
         try {
-            jwt.verify(token!, AuthConfig.privateKey);
+            const user_id: number = parseInt(AuthService.verifyJWTToken(token!) as string);
+            req.user_id = user_id;
             next();
         } catch(err) {
             res.status(401).json({ error: err.message});

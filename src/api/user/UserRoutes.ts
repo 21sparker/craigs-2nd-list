@@ -25,7 +25,7 @@ export class UserRoutes extends CommonRoutesConfig {
             .put((req: Request, res: Response) => {
                 res.status(200).send(`PUT requested for id ${req.params.userId}`);
             })
-            .patch(UserController.patch,)
+            .patch(UserController.patch)
         
         return this.app;
     }

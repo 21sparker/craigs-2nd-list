@@ -10,6 +10,7 @@ import Knex from 'knex';
 import { KnexConfig } from '../config';
 import { CategoryRoutes } from './category/CategoryRoutes';
 import { AuthRoutes } from './auth/AuthRoutes';
+import { PostRoutes } from './post/PostRoutes';
 
 let dbConfig;
 switch (process.env.NODE_ENV) {
@@ -50,6 +51,7 @@ app.use(cors(corsOptions));
 routes.push(new UserRoutes(app));
 routes.push(new CategoryRoutes(app));
 routes.push(new AuthRoutes(app))
+routes.push(new PostRoutes(app));
 
 app.use(expressWinston.logger({
     transports: [
