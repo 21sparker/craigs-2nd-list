@@ -1,4 +1,4 @@
-import { AuthConfig } from '@config/*';
+import { AuthConfig } from '../../config';
 import jwt from 'jsonwebtoken';
 
 class AuthService {

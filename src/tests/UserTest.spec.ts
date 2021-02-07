@@ -1,15 +1,16 @@
 import request from 'supertest';
 import { app, knex } from '../api/app';
 
-beforeAll(async () => {
-    await knex.migrate.latest();
-    await knex.seed.run();
-});
+// beforeAll(async () => {
+//     await knex.migrate.latest();
+//     await knex.seed.run();
+// });
 
-afterAll(async () => {
-    await knex.migrate.rollback(undefined, true);
+// afterAll(async () => {
+//     await knex.migrate.rollback(undefined, true);
     
-});
+// });
+
 
 describe("GET / - a simple api endpoint", () => {
     test("Hello API Request", async (done)=> {
