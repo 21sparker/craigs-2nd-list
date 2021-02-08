@@ -15,7 +15,9 @@ class UserMiddleware {
 
     // Validate that the request body includes an email and password
     public async validateRequiredUserBodyFields(req: Request, res: Response, next: NextFunction) {
+        console.log("required user body fields check")
         if (req.body && req.body.email && req.body.password) {
+            console.log("completed validation")
             next();
         } else {
             res.status(400).send({error: 'Missing required fields email and password'});
@@ -24,8 +26,10 @@ class UserMiddleware {
 
     // Validate that the email isn't already being used
     public async validateSameEmailDoesntExists(req: Request, res: Response, next: NextFunction) {
+        console.log("validate same email doesn't exist")
         const user = await UserService.getUserByEmail(req.body.email);
         if (user) {
+            console.log('completed')
             res.status(400).send({error: 'User email already exists'});
         } else {
             next();

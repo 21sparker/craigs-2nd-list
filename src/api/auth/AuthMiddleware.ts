@@ -16,8 +16,10 @@ export class AuthMiddleware {
     }
 
     public async validateEmailExists(req: Request, res: Response, next: NextFunction) {
+        console.log("validate email exists validation")
         const user = await UserService.getUserByEmail(req.body.email);
         if (user) {
+            console.log('completed validation')
             next();
         } else {
             res.status(404).json({error: 'User not found.'});
@@ -25,9 +27,11 @@ export class AuthMiddleware {
     }
 
     public async validateCorrectPassword(req: Request, res: Response, next: NextFunction) {
+        console.log("validate password validation")
         const user = await UserService.getUserByEmail(req.body.email);
         const match = await bcrypt.compare(req.body.password, user.password);
         if (match) {
+            console.log('completed validation')
             next();
         } else {
             res.status(404).json({error: 'Email or password is incorrect.'});

@@ -14,13 +14,20 @@ class AuthController {
     }
 
     public async getJWTToken(req: Request, res: Response) {
+        console.log("reached token request")
         const user = await UserService.getUserByEmail(req.body.email);
+        console.log("user: ", user);
+        console.log("user_id: ", user.user_id.toString());
+        console.log("privatekey: " , AuthConfig.privateKey);
         try {
-            const token = jwt.sign(user.user_id.toString(), AuthConfig.privateKey,
+            const token = jwt.sign({ user_id: user.user_id.toString() }, 
+            AuthConfig.privateKey,
             { expiresIn: '1h' });
+            console.log("completed")
             res.status(200).json({user_id: user.user_id, token: token});
         } catch(err) {
-            res.status(500).end();
+            console.log(err.message);
+            res.status(500).send({error: err.message});
         }
     }
 }

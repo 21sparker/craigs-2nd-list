@@ -17,8 +17,10 @@ class UserController extends CrudController {
     // Create a new user
     public async create(req: Request, res: Response) {
         // Update password to its hashed version
+        console.log("create user")
         req.body.password = await bcrypt.hash(req.body.password, AuthConfig.saltRounds);
         const user = await UserService.create(req.body);
+        console.log("completed")
         res.status(201).json(user);
     }
 

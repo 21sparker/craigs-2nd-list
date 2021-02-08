@@ -67,6 +67,8 @@ app.get('/', (req: express.Request, res: express.Response) => {
     res.json({ message: "You got me!" });
 })
 
+
+
 export default { app, knex };
 
 // TODO: Update with this error handler:

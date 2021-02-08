@@ -1,4 +1,6 @@
 import * as Knex from "knex";
+import bcrypt from 'bcrypt';
+import { AuthConfig } from '../../config';
 
 export async function seed(knex: Knex): Promise<void> {
     // // Deletes ALL existing entries
@@ -38,7 +40,7 @@ export async function seed(knex: Knex): Promise<void> {
         {
             name: 'Alicia D. Macomber', 
             email: 'AliciaDMacomber@rhyta.com', 
-            password: 'mypassword',
+            password: await bcrypt.hash("aliciaIsAwesome", AuthConfig.saltRounds),
             phone_number: '856-672-5718',
             address: '4892 Prospect Street',
             city: 'Haddonfield',
@@ -48,7 +50,7 @@ export async function seed(knex: Knex): Promise<void> {
         {
             name: 'David M. Motley', 
             email: 'DavidMMotley@teleworm.us', 
-            password: 'mypassword',
+            password: await bcrypt.hash("11@13placE", AuthConfig.saltRounds),
             phone_number: '213-333-0527',
             address: '4038 Brannon Street',
             city: 'Los Angeles',
@@ -58,7 +60,7 @@ export async function seed(knex: Knex): Promise<void> {
         {
             name: 'Maria A. Benjamin', 
             email: 'MariaABenjamin@jourrapide.com', 
-            password: 'mypassword',
+            password: await bcrypt.hash("testpassword", AuthConfig.saltRounds),
             phone_number: '215-357-1507',
             address: '3404 Burning Memory Lane',
             city: 'Churchville',
@@ -69,7 +71,6 @@ export async function seed(knex: Knex): Promise<void> {
 
     await knex("goods").insert([
         {
-            post_id: 1,
             title: 'Mens Hybrid Design Yellow Hoodie 2XL',
             description: 'Mens Hybrid Design Yellow Hoodie 2XL Condition New $25.00',
             city: 'Tampa',
@@ -83,7 +84,6 @@ export async function seed(knex: Knex): Promise<void> {
             subcategory_id: 6
         },
         {
-            post_id: 2,
             title: '08 Nissan titan',
             description: '08 nissan titan for sale.pretty good conditions.has 255k miles.runs good.cold ac.hot heat.paint is feded.leather seats.driver seat has a little wear.heated seats. Shifts good.please call or text 999-999-9999. title in hand.thanks',
             city: 'Tampa',
@@ -97,7 +97,6 @@ export async function seed(knex: Knex): Promise<void> {
             subcategory_id: 2
         },
         {
-            post_id: 3,
             title: 'Beautiful patio table 40',
             description: '',
             city: 'Houston',
@@ -111,7 +110,6 @@ export async function seed(knex: Knex): Promise<void> {
             subcategory_id: 3 
         },
         {
-            post_id: 4,
             title: 'TWO 55" HITACHI LED TV\'S AS IS',
             description: `These 2 tv's have cracked screens. Use for parts? Unfortunately I moved and they both got damaged in transport I am open to price I am sure someone can use parts? Both of them have the Roku sticks but no remote.`,
             city: 'Houston',
@@ -125,7 +123,6 @@ export async function seed(knex: Knex): Promise<void> {
             subcategory_id: 1
         },
         {
-            post_id: 5,
             title: 'SHARK ROTATOR LIFT-AWAY VACUUM CLEANER',
             description: `LIKE NEW SHARK ROTATOR VACUUM CLEANER. BELONGED TO A RELATIVE WHO PASSED AWAY.
 
