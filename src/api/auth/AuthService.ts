@@ -11,8 +11,10 @@ class AuthService {
         return AuthService.instance;
     }
 
-    public verifyJWTToken(token: string): string | object {
-        return jwt.verify(token, AuthConfig.privateKey);
+    public verifyJWTToken(token: string): object {
+        const data = jwt.verify(token, AuthConfig.privateKey) as object;
+        console.log("JWT data: " + data);
+        return data;
     }
 }
 
