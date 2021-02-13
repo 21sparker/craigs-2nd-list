@@ -40,19 +40,24 @@ export class AuthMiddleware {
 
     public async getJWTTokenData(req: Request, res: Response, next: NextFunction) {
         const token = req.get("Authorization");
-
+        console.log("Token: " + token);
         // No jwt token provided
         if (!token) {
+            console.log("Token empty")
             res.status(401).json({ error: "Missing token."});
+        } else {
+            console.log("Token not empty")
+            try {
+                const user_id: number = parseInt(AuthService.verifyJWTToken(token!) as string);
+                console.log("User Id found: " + user_id.toString())
+                req.user_id = user_id;
+                next();
+            } catch(err) {
+                console.log("Error occurred with token: " + err.message)
+                res.status(401).json({ error: err.message});
+            }
         }
-        
-        try {
-            const user_id: number = parseInt(AuthService.verifyJWTToken(token!) as string);
-            req.user_id = user_id;
-            next();
-        } catch(err) {
-            res.status(401).json({ error: err.message});
-        }
+
     }
 }
 
