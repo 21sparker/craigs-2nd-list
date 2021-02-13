@@ -24,12 +24,14 @@ class PostController extends CrudController {
         data.state = 'US';
         data.price = req.body.price;
         data.user_id = req.user_id;
-        data.subcategory_id = await CategoryService.searchSubcategoryByName(req.body.subcategory);
+        const subcategory = await CategoryService.searchSubcategoryByName(req.body.subcategory);
+        data.subcategory_id = subcategory.subcategory_id;
         data.category_id = 1; // For the goods category
+        data.image_url = req.body.image_url;
 
         console.log("Post object data to be created: " + data);
 
-        const good = await PostService.createGood(req.body);
+        const good = await PostService.createGood(data);
         console.log("Good: " + good);
         res.status(201).json(good);
     }
