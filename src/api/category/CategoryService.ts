@@ -22,6 +22,11 @@ class CategoryService {
         return CategoryService.instance;
     }
 
+    public async searchSubcategoryByName(name: string): Promise<Subcategory> {
+        const result = await Subcategory.query().where('name', name);
+        return result[0];
+    }
+
     public async listAll(): Promise<CategoryInterface[]> {
         const queryResults = await Category.query()
             .join('subcategories', 'categories.category_id', '=', 'subcategories.category_id')

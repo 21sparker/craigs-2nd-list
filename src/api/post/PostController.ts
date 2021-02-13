@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { CrudController } from '../common/CrudController';
 import PostService from './PostService';
-
+import CategoryService from '../category/CategoryService';
 
 class PostController extends CrudController {
     private static instance: PostController;
@@ -15,10 +15,22 @@ class PostController extends CrudController {
 
     // Create new post
     public async create(req: Request, res:Response) {
-        const data = req.body;
+        console.log("Request body: " + req.body);
+
+        const data: any = {};
+        data.title = req.body.title;
+        data.description = req.body.description;
+        data.city = req.body.location;
+        data.state = 'US';
+        data.price = req.body.price;
         data.user_id = req.user_id;
+        data.subcategory_id = await CategoryService.searchSubcategoryByName(req.body.subcategory);
         data.category_id = 1; // For the goods category
+
+        console.log("Post object data to be created: " + data);
+
         const good = await PostService.createGood(req.body);
+        console.log("Good: " + good);
         res.status(201).json(good);
     }
 

@@ -42,12 +42,16 @@ export class PostMiddleware {
         if (req.body &&
             req.body.title &&
             req.body.description &&
-            req.body.city &&
-            req.body.state &&
+            // req.body.city &&
+            // req.body.state &&
+            req.body.location &&
             req.body.price &&
-            req.body.subcategory_id) {
+            // req.body.subcategory_id
+            req.body.subcategory) {
+                console.log("Validated fields");
                 next();
             } else {
+                console.log("Fields are not valid: ", req.body);
                 res.status(400).send({error: 'Missing at least one of the following fields: title, description, city, state, price, subcategory_id'});
             }
     }
