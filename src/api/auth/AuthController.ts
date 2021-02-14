@@ -22,7 +22,7 @@ class AuthController {
         try {
             const token = jwt.sign({ user_id: user.user_id.toString() }, 
             AuthConfig.privateKey,
-            { expiresIn: '1h' });
+            { expiresIn: '24h' });
             console.log("completed")
             res.status(200).json({user_id: user.user_id, token: token});
         } catch(err) {

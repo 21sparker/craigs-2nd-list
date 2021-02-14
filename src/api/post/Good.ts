@@ -65,6 +65,7 @@ export default class Good extends Model {
         },
         deleteById(query, id) {
             query.deleteById(parseInt(id));
-        }
+        },
+        
     }
 }
