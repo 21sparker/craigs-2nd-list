@@ -19,21 +19,27 @@ export class PostMiddleware {
     }
 
     public async validatePostExists(req: Request, res: Response, next: NextFunction) {
+        console.log("Validating post exists");
         const post = await PostService.readGoodById(req.params["goodId"]);
-
+        console.log("Post found: " + post);
         if (!post) {
+            console.log("Post not found");
             res.status(404).json({error: `Post ${req.body.post_id} not found`})
         } else {
+            console.log("Post found");
             next();
         }
     }
 
     public async validateUserOwnsPost(req: Request, res: Response, next: NextFunction) {
+        console.log("Validating user owns post");
         const post = await PostService.readGoodById(req.params["goodId"]);
-
+        console.log("Post found: " + post);
         if (req.user_id !== post.user_id) {
+            console.log("Post not owned by user. req.user_id: " + req.user_id + " post.user_id: " + post.user_id);
             res.status(403).json({error: 'User is not permitted to update this post'});
         } else {
+            console.log("Post owned by user");
             next();
         }
     }
@@ -42,12 +48,11 @@ export class PostMiddleware {
         if (req.body &&
             req.body.title &&
             req.body.description &&
-            // req.body.city &&
-            // req.body.state &&
-            req.body.location &&
+            req.body.city &&
+            req.body.state &&
+            // req.body.location &&
             req.body.price &&
-            // req.body.subcategory_id
-            req.body.subcategory) {
+            req.body.subcategory_id) {
                 console.log("Validated fields");
                 next();
             } else {

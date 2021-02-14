@@ -15,7 +15,7 @@ class PostService {
 
     public async createGood(resource: any): Promise<Good> {
         const good = await Good.query().modify('create', resource).first();
-        this.getAdditionalRelatedFields(good);
+        await this.getAdditionalRelatedFields(good);
         return good;
     }
 
@@ -26,7 +26,9 @@ class PostService {
     }
 
     public async patchGoodById(id: string, resource: any): Promise<Good> {
-        const good =  await Good.query().modify('patchById', id).first();
+        console.log('Patch Good Id: ' + id);
+        console.log('Patch Resource: ' + resource);
+        const good =  await Good.query().modify('patchById', id, resource).first();
         await this.getAdditionalRelatedFields(good);
         return good;
     }
@@ -61,7 +63,7 @@ class PostService {
         });
         
         // const results: Good[] = await Good.query().where('title', '~*', 'mens')
-        console.log(results);
+        results.map(async item => await this.getAdditionalRelatedFields(item));
         return results;
     }
 

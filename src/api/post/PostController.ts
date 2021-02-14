@@ -20,12 +20,11 @@ class PostController extends CrudController {
         const data: any = {};
         data.title = req.body.title;
         data.description = req.body.description;
-        data.city = req.body.location;
-        data.state = 'US';
+        data.city = req.body.city;
+        data.state = req.body.state;
         data.price = req.body.price;
         data.user_id = req.user_id;
-        const subcategory = await CategoryService.searchSubcategoryByName(req.body.subcategory);
-        data.subcategory_id = subcategory.subcategory_id;
+        data.subcategory_id = req.body.subcategory_id;
         data.category_id = 1; // For the goods category
         data.image_url = req.body.image_url;
 
