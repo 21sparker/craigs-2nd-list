@@ -1,4 +1,7 @@
 import { Model, Modifier, Modifiers } from 'objection';
+import Category from '../category/Category';
+import Subcategory from '../category/Subcategory';
+import User from '../user/User';
 
 
 export default class Good extends Model {
@@ -14,6 +17,10 @@ export default class Good extends Model {
     user_id!: number;
     category_id!: number;
     subcategory_id!: number;
+
+    user!: User;
+    category!: string;
+    subcategory!: string;
 
     static tableName = 'goods';
     static idColumn = 'post_id';
@@ -66,6 +73,5 @@ export default class Good extends Model {
         deleteById(query, id) {
             query.deleteById(parseInt(id));
         },
-        
     }
 }

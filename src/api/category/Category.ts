@@ -23,4 +23,10 @@ export default class Category extends Model {
             }
         }
     }
+
+    static modifiers: Modifiers = {
+        searchById(query, id) {
+            query.findById(parseInt(id));
+        }
+    }
 }

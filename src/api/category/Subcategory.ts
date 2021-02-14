@@ -25,4 +25,10 @@ export default class Subcategory extends Model {
             }
         }
     } 
+
+    static modifiers: Modifiers = {
+        searchById(query, id) {
+            query.findById(parseInt(id));
+        }
+    }
 }

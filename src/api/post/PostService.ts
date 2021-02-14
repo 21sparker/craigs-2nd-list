@@ -1,3 +1,5 @@
+import Category from '../category/Category';
+import Subcategory from '../category/Subcategory';
 import User from '../user/User';
 import Good from './Good';
 
@@ -12,15 +14,21 @@ class PostService {
     }
 
     public async createGood(resource: any): Promise<Good> {
-        return await Good.query().modify('create', resource).first();
+        const good = await Good.query().modify('create', resource).first();
+        this.getAdditionalRelatedFields(good);
+        return good;
     }
 
     public async readGoodById(id: string): Promise<Good> {
-        return await Good.query().modify('searchById', id).first();
+        const good = await Good.query().modify('searchById', id).first();
+        await this.getAdditionalRelatedFields(good);
+        return good;
     }
 
     public async patchGoodById(id: string, resource: any): Promise<Good> {
-        return await Good.query().modify('patchById', id).first();
+        const good =  await Good.query().modify('patchById', id).first();
+        await this.getAdditionalRelatedFields(good);
+        return good;
     }
 
     public async deleteGoodById(id: string, resource: any): Promise<void> {
@@ -55,6 +63,14 @@ class PostService {
         // const results: Good[] = await Good.query().where('title', '~*', 'mens')
         console.log(results);
         return results;
+    }
+
+
+    private async getAdditionalRelatedFields(good: Good): Promise<Good> {
+        good.user = await User.query().modify('searchById', good.user_id).first();
+        good.category = (await Category.query().modify('searchById', good.category_id).first()).name;
+        good.subcategory = (await Subcategory.query().modify('searchById', good.subcategory_id).first()).name;
+        return good;
     }
 
 }
