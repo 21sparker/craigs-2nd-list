@@ -60,7 +60,7 @@ class PostService {
                     builder = builder.where('title', '~*', w);
                 })
             }
-        });
+        }).orderBy('created_at', 'desc');
         
         // const results: Good[] = await Good.query().where('title', '~*', 'mens')
         results.map(async item => await this.getAdditionalRelatedFields(item));
