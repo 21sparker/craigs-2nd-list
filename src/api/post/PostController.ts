@@ -58,7 +58,7 @@ class PostController extends CrudController {
         const searchResults = await PostService.search(
             q as string | undefined, 
             sc as string | string[] | undefined, 
-            loc as string | string[] | undefined, 
+            loc as string | undefined, 
             uid as string | undefined);
         res.status(200).json(searchResults);
     }

@@ -1,3 +1,4 @@
+import { getOriginalNode } from 'typescript';
 import Category from '../category/Category';
 import Subcategory from '../category/Subcategory';
 import User from '../user/User';
@@ -39,31 +40,37 @@ class PostService {
 
     public async search(q: string | undefined,
                         sc: string | string[] | undefined,
-                        loc: string | string[] | undefined,
+                        loc: string | undefined,
                         uid: string | undefined): Promise<Good[]> {
         console.log("Running search")
-        const results: Good[] = await Good.query().where((builder) => {
-            if (sc) {
-                if (Array.isArray(sc)) {
-                    builder = builder.whereIn('subcategory_id', sc!.map(c => parseInt(c)));
-                } else if (typeof sc === "string") {
-                    builder = builder.where('subcategory_id', parseInt(sc));
-                }
-            }
-            if (uid) {
-                builder = builder.where('user_id', parseInt(uid));
-            }
-            if (q) {
-                const queryWords = q.split(' ');
-                queryWords.map((w: string) => {
-                    console.log(`%${w}%`)
-                    builder = builder.where('title', '~*', w);
-                    builder = builder.orWhere('description', '~*', w);
+        let qBuilder = Good.query();
 
-                })
+        if (sc) {
+            if (Array.isArray(sc)) {
+                qBuilder = qBuilder.whereIn('subcategory_id', sc!.map(c => parseInt(c)));
+            } else if (typeof sc === "string") {
+                qBuilder = qBuilder.where('subcategory_id', parseInt(sc));
             }
-        }).orderBy('created_at', 'desc').debug();
+        }
+        if (uid) {
+            qBuilder = qBuilder.where('user_id', parseInt(uid));
+        }
+        if (q) {
+            q.split(' ').map((w: string) => {
+                qBuilder.where(builder => {
+                    builder.where('title', '~*', w).orWhere('description', '~*', w);
+                });
+            });
+        }
+        if (loc) {
+            loc.split(' ').map((w: string) => {
+                qBuilder.where(builder => {
+                    builder.where('city', '~*', w).orWhere('state', '~*', w);
+                });
+            });
+        }
         
+        const results: Good[] = await qBuilder.orderBy('created_at', 'desc').debug();        
         results.map(async item => await this.getAdditionalRelatedFields(item));
         return results;
     }
