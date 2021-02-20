@@ -41,7 +41,7 @@ class PostService {
                         sc: string | string[] | undefined,
                         loc: string | string[] | undefined,
                         uid: string | undefined): Promise<Good[]> {
-
+        console.log("Running search")
         const results: Good[] = await Good.query().where((builder) => {
             if (sc) {
                 if (Array.isArray(sc)) {
@@ -58,11 +58,12 @@ class PostService {
                 queryWords.map((w: string) => {
                     console.log(`%${w}%`)
                     builder = builder.where('title', '~*', w);
+                    builder = builder.orWhere('description', '~*', w);
+
                 })
             }
-        }).orderBy('created_at', 'desc');
+        }).orderBy('created_at', 'desc').debug();
         
-        // const results: Good[] = await Good.query().where('title', '~*', 'mens')
         results.map(async item => await this.getAdditionalRelatedFields(item));
         return results;
     }
