@@ -55,7 +55,7 @@ class PostService {
         if (uid) {
             qBuilder = qBuilder.where('user_id', parseInt(uid));
         }
-        if (q) {
+        if (q && q !== "") {
             q.split(' ').map((w: string) => {
                 qBuilder.where(builder => {
                     builder.where('title', '~*', w).orWhere('description', '~*', w);
@@ -74,7 +74,6 @@ class PostService {
         results.map(async item => await this.getAdditionalRelatedFields(item));
         return results;
     }
-
 
     private async getAdditionalRelatedFields(good: Good): Promise<Good> {
         good.user = await User.query().modify('searchById', good.user_id).first();
