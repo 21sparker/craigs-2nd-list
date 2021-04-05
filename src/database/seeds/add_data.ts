@@ -138,11 +138,13 @@ export async function seed(knex: Knex): Promise<void> {
             state: 'TX',
             price: '500.50',
             image_url: 'https://images.craigslist.org/00404_41uMSZosgANz_0nY0t2_600x450.jpg',
-            created_at: new Date('December 30, 2020 21:09:45 CST'),
-            updated_at: new Date('January 1, 2021 21:15:45 CST'),
+            // created_at: new Date('December 30, 2020 21:09:45 CST'),
+            // updated_at: new Date('January 1, 2021 21:15:45 CST'),
+            created_at: "2021-02-02T10:56:25-0500",
+            updated_at: "2021-02-02T10:56:25-0500",
             user_id: 2,
             category_id: 1,
             subcategory_id: 5
-        },
+        }
     ]);
 };
